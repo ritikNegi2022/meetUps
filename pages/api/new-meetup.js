@@ -4,7 +4,9 @@ async function handler(req, res) {
   if (req.method === "POST") {
     const data = req.body;
 
-    const client = await MongoClient.connect(process.env.DB_URL);
+    const client = await MongoClient.connect(
+      "mongodb+srv://grim_2022:rokdevil2001@cluster0.cbq8mrz.mongodb.net/meetups?retryWrites=true&w=majority"
+    );
     const db = client.db();
 
     const meetupCollection = db.collection("meetups");

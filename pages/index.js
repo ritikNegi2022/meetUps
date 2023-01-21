@@ -7,9 +7,12 @@ import Head from "next/head";
 function HomePage(props) {
   return (
     <>
-      <Head>\
-        <title>Next Meetups</title>
-        <meta name="description" content="This is a project website to practice on Next.js"/>
+      <Head>
+        \<title>Next Meetups</title>
+        <meta
+          name="description"
+          content="This is a project website to practice on Next.js"
+        />
       </Head>
       <MeetupList meetups={props.meetups} />
     </>
@@ -17,23 +20,24 @@ function HomePage(props) {
 }
 
 export async function getStaticProps() {
-
-  const client = await MongoClient.connect(process.env.DB_URL);
+  const client = await MongoClient.connect(
+    "mongodb+srv://grim_2022:rokdevil2001@cluster0.cbq8mrz.mongodb.net/meetups?retryWrites=true&w=majority"
+  );
   const db = client.db();
 
   const meetupCollection = db.collection("meetups");
 
-  const meetups = await meetupCollection.find().toArray()
+  const meetups = await meetupCollection.find().toArray();
 
   client.close();
 
   return {
     props: {
-      meetups: meetups.map(meetup => ({
+      meetups: meetups.map((meetup) => ({
         title: meetup.data.title,
         address: meetup.data.address,
         image: meetup.data.image,
-        id: meetup._id.toString()
+        id: meetup._id.toString(),
       })),
     },
     revalidate: 1,
